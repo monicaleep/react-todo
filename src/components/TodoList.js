@@ -9,9 +9,9 @@ import '../css/components/TodoList.css'
   TodoMVC ✔️
   1. add todo ✔️
   2. display todos ✔️
-  3. cross off todo
+  3. cross off todo✔️
   4. show number of active todos
-  5. delete todo
+  5. delete todo✔️
   <--- EXTRA CREDIT 👇 --->
   6. filter all/active/complete
   7. delete all complete
@@ -56,7 +56,9 @@ class TodoList extends Component {
   }
 
   render() {
-    return (<div className="list">
+    return (
+      <div className="list">
+        <div>Todos Left: {this.state.todos.filter(todo=>!todo.complete).length} </div>
       {/* Passing addTodos to child to grab values to 'lift the state' */}
       <TodoForm addTodo={this.addTodo}/>
       {/* Mapping through the array of todos in state */}
