@@ -2,6 +2,7 @@ import React, {Component} from "react";
 
 // Components import
 import TodoForm from './TodoForm.js'
+import Todo from './Todo.js'
 // CSS import
 import '../css/components/TodoList.css'
 /*
@@ -32,11 +33,36 @@ class TodoList extends Component {
     }))
   }
 
+  toggleComplete = id =>{
+    this.setState(state => ({
+      todos: state.todos.map(todo=>{
+        if(todo.id === id){
+          return {
+            ...todo,
+            complete: !todo.complete
+          }
+        } else{
+          return todo
+        }
+      })
+    }))
+  }
+
+
+  deleteTodo = id =>{
+    this.setState(state=>({
+      todos: state.todos.filter(todo=>todo.id !== id)
+    }))
+  }
+
   render() {
     return (<div className="list">
       {/* Passing addTodos to child to grab values to 'lift the state' */}
-      <TodoForm addTodo={this.addTodo}/> {/* Mapping through the array of todos in state */}
-      {this.state.todos.map(todo => (<p>{todo.text}</p>))}
+      <TodoForm addTodo={this.addTodo}/>
+      {/* Mapping through the array of todos in state */}
+      {this.state.todos.map(todo => (
+        <Todo key={todo.id} text={todo.text} complete={todo.complete} toggleComplete={()=>this.toggleComplete(todo.id)} deleteTodo={()=>this.deleteTodo(todo.id)}/>
+      ))}
     </div>)
   }
 }
